@@ -24,15 +24,16 @@ namespace DynamicWorld.Earthquake
         float lastEarthquakeTime;
 
         //in seconds
-        float minEarthquakeDuration = 1f;
-        float maxEarthquakeDuration = 22f;
+        float minEarthquakeDuration = 10f;
+        float maxEarthquakeDuration = 20f;
 
         ClipManager clips = Main.EarthquakeAudio;
-        Shot audio;
+        Shot player;
 
         public void Awake()
         {
-            audio = AudioMaster.CreatePlayerShot(AudioMaster.SourceType.SFX);
+            player = AudioMaster.CreatePlayerShot(AudioMaster.SourceType.SFX);
+            VolumeMaster.onVolumeChange -= player.ResetVolume;
         }
 
         private void LoadOrInitData()
@@ -81,8 +82,9 @@ namespace DynamicWorld.Earthquake
 
             vp_FPSCamera cam = GameManager.GetVpFPSCamera();
             cam.DoEarthQuake(x, y, duration, weaponSway, rotation);
+
             //audio
-            audio.PlayOneshot(clips.GetClip(EarthquakeAudioHelper.GetAudioForScene(true, duration)));
+            EarthquakeAudioHelper.PlayAudio(true, duration, player, clips);
 
             ScheduleEarthquake();
         }
@@ -92,12 +94,13 @@ namespace DynamicWorld.Earthquake
         {
             Main.Logger.Log("Doing minor tremor.", ComplexLogger.FlaggedLoggingLevel.Trace);
 
-            float duration = FloatUtilities.GetRandomFloat(0.1f, 3f);
+            float duration = FloatUtilities.GetRandomFloat(1f, 4f);
 
             vp_FPSCamera cam = GameManager.GetVpFPSCamera();
             cam.DoEarthQuake(x, y, duration, weaponSway, rotation);
+
             //audio
-            audio.PlayOneshot(clips.GetClip(EarthquakeAudioHelper.GetAudioForScene(false, duration)));
+            EarthquakeAudioHelper.PlayAudio(false, duration, player, clips);
         }
 
         private void ScheduleEarthquake()
