@@ -24,7 +24,7 @@ namespace DynamicWorld.Earthquake
            
             playerShot._audioSource.volume = 1f;
 
-            if(!eq) new PlayAndFade(playerShot, cm.GetClip(GetBaseAudioForScene(duration)), duration, duration * 0.25f);
+            new PlayAndFade(playerShot, cm.GetClip(GetBaseAudioForScene(duration)), duration, duration * 0.25f);
 
             if (eq)
             {
@@ -37,7 +37,6 @@ namespace DynamicWorld.Earthquake
                     Shot shot = kpv.Key.gameObject.GetComponent<Shot>();
                     if (shot == null)
                     {
-                        Main.Logger.Log("Shot doesn't exist, creating", ComplexLogger.FlaggedLoggingLevel.Debug);
                         shot = AudioMaster.CreateShot(kpv.Key, AudioMaster.SourceType.SFX);
                     }
                     shot.ApplySettings(kpv.Value.Item2);
@@ -85,6 +84,7 @@ namespace DynamicWorld.Earthquake
 
         private static string GetBaseAudioForScene(float duration)
         {
+            if (duration <= 2f) return "lowRumble";
             return SceneUtils.IsSceneWoodBuilding(GameManager.m_ActiveScene) ? "lowRumbleInteriorWood" : "lowRumble";
         }
 

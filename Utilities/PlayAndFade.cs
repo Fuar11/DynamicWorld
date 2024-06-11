@@ -30,7 +30,7 @@ namespace DynamicWorld.Utilities
             _assignedClip = audioClip;
             _fadeDuration = fadeDuration;
 
-            _startTime = AudioSettings.dspTime + 0.5;
+            _startTime = AudioSettings.dspTime;
 
             Main.Logger.Log($"Clip duration: {_assignedClip.clipLength}", ComplexLogger.FlaggedLoggingLevel.Debug);
             Main.Logger.Log($"Duration: {duration}", ComplexLogger.FlaggedLoggingLevel.Debug);

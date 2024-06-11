@@ -94,7 +94,7 @@ namespace DynamicWorld.Earthquake
         {
             Main.Logger.Log("Doing minor tremor.", ComplexLogger.FlaggedLoggingLevel.Trace);
 
-            float duration = FloatUtilities.GetRandomFloat(1f, 4f);
+            float duration = FloatUtilities.GetRandomFloat(1.5f, 5f);
 
             vp_FPSCamera cam = GameManager.GetVpFPSCamera();
             cam.DoEarthQuake(x, y, duration, weaponSway, rotation);
