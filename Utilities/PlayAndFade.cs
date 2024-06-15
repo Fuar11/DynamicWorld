@@ -32,12 +32,11 @@ namespace DynamicWorld.Utilities
 
             _startTime = AudioSettings.dspTime;
 
-            Main.Logger.Log($"Clip duration: {_assignedClip.clipLength}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Duration: {duration}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Fade duration: {fadeDuration}", ComplexLogger.FlaggedLoggingLevel.Debug);
-
             _assignedShot.AssignClip(_assignedClip);
             _assignedShot._audioSource.PlayScheduled(_startTime);
+
+            Main.Logger.Log($"Playing audio on object: {_assignedShot.gameObject.name}", ComplexLogger.FlaggedLoggingLevel.Debug);
+
             _duration = duration;
             _startVolume = _assignedShot._audioSource.volume;
             _fadeStartTime = _duration - _fadeDuration;
@@ -55,6 +54,7 @@ namespace DynamicWorld.Utilities
         {
             while (_isPlaying)
             {
+
                 _timeElapsed = AudioSettings.dspTime - _startTime;
 
                 if (_timeElapsed < _fadeStartTime)

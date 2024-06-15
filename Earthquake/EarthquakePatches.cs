@@ -59,8 +59,6 @@ namespace DynamicWorld.Earthquake
                 __instance.m_EarthQuakeTime -= elapsedTime;
                 lastUpdateTime = currentTime;
 
-                Main.Logger.Log($"Earthquake time: {__instance.m_EarthQuakeTime}", ComplexLogger.FlaggedLoggingLevel.Debug);
-
                 if (!__instance.Controller.isGrounded)
                 {
                     return;
@@ -86,6 +84,5 @@ namespace DynamicWorld.Earthquake
             }
 
         }
-
     }
 }
