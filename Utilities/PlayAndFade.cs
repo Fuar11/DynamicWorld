@@ -52,8 +52,26 @@ namespace DynamicWorld.Utilities
 
         private IEnumerator TimerLoop()
         {
+            bool wasPaused = false;
+
             while (_isPlaying)
             {
+                while (GameManager.m_IsPaused || GameManager.m_ActiveScene.ToLower() == "empty")
+                {
+                    if (_assignedShot._audioSource.isPlaying)
+                    {
+                        _assignedShot._audioSource.Pause();
+                    }
+                    wasPaused = true;
+
+                    yield return null;
+                }
+
+                if (wasPaused)
+                {
+                    _assignedShot._audioSource.Play();
+                    wasPaused = false;
+                }
 
                 _timeElapsed = AudioSettings.dspTime - _startTime;
 
@@ -63,7 +81,7 @@ namespace DynamicWorld.Utilities
                 }
                 else
                 {
-                  
+
                     double fadeProgress = (AudioSettings.dspTime - (_startTime + _fadeStartTime)) / _fadeDuration;
 
                     _assignedShot._audioSource.volume = Mathf.Lerp((float)_startVolume, 0f, (float)fadeProgress);
