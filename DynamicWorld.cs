@@ -1,6 +1,7 @@
 using AudioMgr;
 using ComplexLogger;
 using DynamicWorld.Earthquake;
+using DynamicWorld.Environment;
 using UnityEngine.Rendering.PostProcessing;
 
 namespace DynamicWorld
@@ -16,6 +17,7 @@ namespace DynamicWorld
         public override void OnInitializeMelon()
         {
             MelonLogger.Msg("Dynamic World is online.");
+            Settings.OnLoad();
             Logger ??= new();
         }
 
@@ -39,6 +41,12 @@ namespace DynamicWorld
                 EarthquakeAudio = AudioMaster.NewClipManager();
                 EarthquakeAudio.LoadClipsFromDir("DynamicWorld/Audio", ClipManager.LoadType.Compressed);
             }
+
+            if(sceneName.ToLowerInvariant() == "ravinetransitionzone")
+            {
+                new TransitionZoneManager().ModifyRavineTransition();
+            }
+
         }
 
         public override void OnUpdate()
@@ -51,6 +59,14 @@ namespace DynamicWorld
             {
                 EarthquakeComponent.DoEarthquake();
             }
+
+            if (InputManager.GetKeyDown(InputManager.m_CurrentContext, KeyCode.KeypadEnter))
+            {
+                TransitionZoneManager tmz = new TransitionZoneManager();
+                tmz.ResetSaveData();
+            }
+
+
         }
 
     }

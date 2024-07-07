@@ -4,33 +4,16 @@ namespace DynamicWorld
     {
         internal static Settings Instance { get; } = new();
 
-        [Section("Spawn Rates")]
+        public enum Active
+        {
+            Disabled, Enabled
+        }
 
-        [Name("Pilgram")]
-        [Slider(0f, 100f, 101)]
-        public float pilgramSpawnExpectation = 80f;
+        [Section("Transition Zones")]
 
-        [Name("Voyager")]
-        [Slider(0f, 100f, 101)]
-        public float voyagerSpawnExpectation = 70f;
-
-        [Name("Stalker")]
-        [Slider(0f, 100f, 101)]
-        public float stalkerSpawnExpectation = 50f;
-
-        [Name("Interloper")]
-        [Slider(0f, 100f, 101)]
-        public float interloperSpawnExpectation = 20f;
-
-        [Name("Challenge")]
-        [Description("NOT SUPPORTED")]
-        [Slider(0f, 100f, 101)]
-        public float challengeSpawnExpectation = 100f;
-
-        [Name("Story")]
-        [Description("NOT SUPPORTED")]
-        [Slider(0f, 100f, 101)]
-        public float storySpawnExpectation = 90f;
+        [Name("Hard Lock")]
+        [Choice("Disabled", "Enabled")]
+        public Active hardLock = Active.Disabled;
 
         // this is called whenever there is a change. Ensure it contains the null bits that the base method has
         protected override void OnChange(FieldInfo field, object? oldValue, object? newValue)

@@ -9,6 +9,7 @@ using MelonLoader;
 using AudioMgr;
 using static System.Random;
 using Random = System.Random;
+using DynamicWorld.Environment;
 
 namespace DynamicWorld.Earthquake
 {
@@ -77,11 +78,14 @@ namespace DynamicWorld.Earthquake
         public void DoEarthquake(float x = 0.9f, float y = 0.1f, float weaponSway = 0.1f, float rotation = 0.4f)
         {
             Main.Logger.Log("Doing major earthquake!", ComplexLogger.FlaggedLoggingLevel.Trace);
+            TransitionZoneManager tzm = new TransitionZoneManager();
+            tzm.RollTransitionZones();
 
             float duration = FloatUtilities.GetRandomFloat(minEarthquakeDuration, maxEarthquakeDuration);
 
             vp_FPSCamera cam = GameManager.GetVpFPSCamera();
             cam.DoEarthQuake(x, y, duration, weaponSway, rotation);
+
 
             //audio
             EarthquakeAudioHelper.PlayAudio(true, duration, player, clips);
