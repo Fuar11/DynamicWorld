@@ -54,5 +54,25 @@ namespace DynamicWorld.Utilities
 
         }
 
+        public static void InstantiateObjectInScene(GameObject prfb, Vector3 pos, Vector3 rot)
+        {
+            if (prfb == null)
+            {
+                Main.Logger.Log("GameObject is null", FlaggedLoggingLevel.Debug);
+                return;
+            }
+            Main.Logger.Log("Instantiating object in scene", FlaggedLoggingLevel.Debug);
+
+            GameObject go = GameObject.Instantiate<GameObject>(prfb);
+            go.transform.position = pos;
+            go.transform.rotation = Quaternion.Euler(rot);
+            go.name = "FUAR_" + go.name;
+
+            if (go.GetComponent<Collider>() == null)
+            {
+                go.AddComponent<MeshCollider>();
+            }
+        }
+
     }
 }

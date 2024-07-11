@@ -1,5 +1,7 @@
 ﻿using MelonLoader.Utils;
 using DynamicWorld.Utilities.JSON;
+using UnityEngine.AddressableAssets;
+using DynamicWorld.Utilities;
 
 namespace DynamicWorld.Environment
 {
@@ -156,6 +158,53 @@ namespace DynamicWorld.Environment
             
             GameObject snowPatch = GameObject.Find("TRN_SnowPatchMedD_Prefab (1)");
             snowPatch.active = false;
+
+        }
+
+        public void ModifyTunnels()
+        {
+            Main.Logger.Log("Modifying the tunnels", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            string scene = GameManager.m_ActiveScene;
+
+            if(scene == "LakeRegion" && forlornMuskegTunnelTransition != 0)
+            {
+
+                Main.Logger.Log("Modifying tunnel to FM", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+                //GameObject tunnelRock1 = Addressables.LoadAssetAsync<GameObject>("TRN_RockGroupMidB_Main").WaitForCompletion();
+                GameObject tunnelRock1 = GameObject.Find("TRN_RockGroupMidB_Top_Prefab");
+                
+                Vector3 position1 = new Vector3(774.6f, 34.88f, -206.2f);
+                Vector3 rotation1 = new Vector3(-7.93f, -87.81f, -169.5f);
+
+                SceneUtils.InstantiateObjectInScene(tunnelRock1, position1, rotation1);
+
+                //pos - x: 736.88, y: 42.88, z: -155.4
+                //rot - x: 185.98, y: -87.34, z: -174
+                //mesh TRN_Rock Group Mid B_Base Snow
+                //mat 1 TRN_Snow_A02
+                //mat 2 TRN_Rock07_Win_01
+
+                //GameObject tunnelRock2 = Addressables.LoadAssetAsync<GameObject>("TRN_RockMidl03").WaitForCompletion();
+                GameObject tunnelRock2 = GameObject.Find("TRN_RockMidl03_BaseA_Prefab");
+
+                Vector3 position2 = new Vector3(769.69f, 38.02f, -144.2f);
+                Vector3 rotation2 = new Vector3(46.604f, -27.95f, -15.067f);
+
+                SceneUtils.InstantiateObjectInScene(tunnelRock2, position2, rotation2);
+
+                //pos - x: 769.69, y: 38.02, z: -144.2
+                //rot - x: 46.604, y: -27.95, z: -15.067
+                //mesh TRN_Rock Midl 03_Base A_LOD0 unsure about this
+                //mat 1 TRN_Snow_A02
+                //mat 2 TRN_Rock07_Win_01
+            }
+            else if (scene == "TracksRegion" && brokenRailroadTunnelTransition != 0)
+            {
+                //nothing yet
+            }
+
 
         }
 
