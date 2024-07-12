@@ -33,7 +33,7 @@ namespace DynamicWorld.Environment
             TransitionZoneDataSaveDataProxy? ldp = JsonFile.Load<TransitionZoneDataSaveDataProxy>($"{MelonEnvironment.ModsDirectory}/DynamicWorld.json", true);
 
             //if data from load is null
-            if(ldp == null)
+            if (ldp == null)
             {
                 ravineTransition = 0; //three way
                 cinderHillsTransition = 0; //three way
@@ -83,12 +83,12 @@ namespace DynamicWorld.Environment
 
         public void ResetSaveData()
         {
-            ravineTransition = 0; 
-            cinderHillsTransition = 0; 
+            ravineTransition = 0;
+            cinderHillsTransition = 0;
             windingRiverCaveTransition = 0;
             crumblingHighwayTransition = 0;
             forlornMuskegTunnelTransition = 0;
-            brokenRailroadTunnelTransition = 0; 
+            brokenRailroadTunnelTransition = 0;
             mountainTownCaveTransition = 0;
             bleakInletCaveTransition = 0;
             ashCanyonCaveTransition = 0;
@@ -100,7 +100,7 @@ namespace DynamicWorld.Environment
 
         public void RollTransitionZones()
         {
-             
+
             //check if they're zero first
             ashCanyonCaveTransition = ashCanyonCaveTransition == 0 && Utils.RollChance(40) ? 1 : ashCanyonCaveTransition;
             bleakInletCaveTransition = bleakInletCaveTransition == 0 && Utils.RollChance(40) ? 1 : bleakInletCaveTransition;
@@ -120,11 +120,11 @@ namespace DynamicWorld.Environment
             }
             else
             {
-                if(mountainTownCaveTransition == 0) 
+                if (mountainTownCaveTransition == 0)
                 {
                     forlornMuskegTunnelTransition = forlornMuskegTunnelTransition == 0 && Utils.RollChance(40) ? 1 : forlornMuskegTunnelTransition;
                 }
-                if (forlornMuskegTunnelTransition == 0) 
+                if (forlornMuskegTunnelTransition == 0)
                 {
                     mountainTownCaveTransition = mountainTownCaveTransition == 0 && Utils.RollChance(40) ? 1 : mountainTownCaveTransition;
                 }
@@ -133,7 +133,7 @@ namespace DynamicWorld.Environment
                 {
                     windingRiverCaveTransition = windingRiverCaveTransition == 0 && Utils.RollChance(40) ? 1 : windingRiverCaveTransition;
                 }
-                if (windingRiverCaveTransition == 0 && cinderHillsTransition == 0) 
+                if (windingRiverCaveTransition == 0 && cinderHillsTransition == 0)
                 {
                     ravineTransition = ravineTransition == 0 && Utils.RollChance(40) ? 1 : ravineTransition;
                 }
@@ -143,7 +143,7 @@ namespace DynamicWorld.Environment
                 }
             }
 
-          
+
 
             SaveData();
         }
@@ -155,7 +155,7 @@ namespace DynamicWorld.Environment
 
             GameObject treeBridge = GameObject.Find("OBJ_TreeCedarFelledC_Prefab");
             treeBridge.active = false;
-            
+
             GameObject snowPatch = GameObject.Find("TRN_SnowPatchMedD_Prefab (1)");
             snowPatch.active = false;
 
@@ -167,24 +167,18 @@ namespace DynamicWorld.Environment
 
             string scene = GameManager.m_ActiveScene;
 
-            if(scene == "LakeRegion" && forlornMuskegTunnelTransition != 0)
+            if (scene == "LakeRegion" && forlornMuskegTunnelTransition != 0)
             {
 
                 Main.Logger.Log("Modifying tunnel to FM", ComplexLogger.FlaggedLoggingLevel.Debug);
 
                 //GameObject tunnelRock1 = Addressables.LoadAssetAsync<GameObject>("TRN_RockGroupMidB_Main").WaitForCompletion();
                 GameObject tunnelRock1 = GameObject.Find("TRN_RockGroupMidB_Top_Prefab");
-                
+
                 Vector3 position1 = new Vector3(774.6f, 34.88f, -206.2f);
                 Vector3 rotation1 = new Vector3(-7.93f, -87.81f, -169.5f);
 
                 SceneUtils.InstantiateObjectInScene(tunnelRock1, position1, rotation1);
-
-                //pos - x: 736.88, y: 42.88, z: -155.4
-                //rot - x: 185.98, y: -87.34, z: -174
-                //mesh TRN_Rock Group Mid B_Base Snow
-                //mat 1 TRN_Snow_A02
-                //mat 2 TRN_Rock07_Win_01
 
                 //GameObject tunnelRock2 = Addressables.LoadAssetAsync<GameObject>("TRN_RockMidl03").WaitForCompletion();
                 GameObject tunnelRock2 = GameObject.Find("TRN_RockMidl03_BaseA_Prefab");
@@ -194,15 +188,49 @@ namespace DynamicWorld.Environment
 
                 SceneUtils.InstantiateObjectInScene(tunnelRock2, position2, rotation2);
 
-                //pos - x: 769.69, y: 38.02, z: -144.2
-                //rot - x: 46.604, y: -27.95, z: -15.067
-                //mesh TRN_Rock Midl 03_Base A_LOD0 unsure about this
-                //mat 1 TRN_Snow_A02
-                //mat 2 TRN_Rock07_Win_01
+                GameObject.Find("Design/Scripting/Transitions/Marsh/TransitionZone").active = false;
+                GameObject.Find("Design/Scripting/Transitions/Marsh/TransitionContact").active = false;
+
+            }
+            else if (scene == "MarshRegion")
+            {
+
+                if (forlornMuskegTunnelTransition != 0)
+                {
+                    GameObject tunnelRock = GameObject.Find("TRN_RockBig02_Top_Prefab");
+
+                    Vector3 position = new Vector3(1772.2f, -129.88f, 1102.2f);
+                    Vector3 rotation = new Vector3(142.15f, 84.32f, 49.5f);
+
+                    SceneUtils.InstantiateObjectInScene(tunnelRock, position, rotation);
+                }
+
+                if (brokenRailroadTunnelTransition != 0)
+                {
+
+                    GameObject tunnelRock = GameObject.Find("TRN_RockGroupMidB_Top_Prefab");
+
+                    Vector3 position = new Vector3(-105.4f, -137.88f, 832.58f);
+                    Vector3 rotation = new Vector3(29.36f, 10.27f, 21.25f);
+
+                    SceneUtils.InstantiateObjectInScene(tunnelRock, position, rotation);
+
+                    GameObject.Find("Design/Transitions/Tracks/TransitionZone").active = false;
+                    GameObject.Find("Design/Transitions/Tracks/TransitionContact").active = false;
+
+                }
             }
             else if (scene == "TracksRegion" && brokenRailroadTunnelTransition != 0)
             {
-                //nothing yet
+                GameObject tunnelRock = GameObject.Find("TRN_RockMid01_Bottom_Prefab");
+
+                Vector3 position = new Vector3(665.99f, 233.6f, 1675.58f);
+                Vector3 rotation = new Vector3(246.36f, -55.63f, 283.67f);
+
+                SceneUtils.InstantiateObjectInScene(tunnelRock, position, rotation);
+
+                GameObject.Find("Design/Transitions/MarshRegion/TransitionZone").active = false;
+                GameObject.Find("Design/Transitions/MarshRegion/TransitionContact").active = false;
             }
 
 
@@ -217,7 +245,7 @@ namespace DynamicWorld.Environment
         {
 
         }
-      
+
 
     }
 }

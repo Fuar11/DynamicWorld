@@ -46,7 +46,7 @@ namespace DynamicWorld
             {
                 new TransitionZoneManager().ModifyRavineTransition();
             }
-            if(sceneName.ToLowerInvariant() == "lakeregion" || sceneName.ToLowerInvariant() == "tracksregion")
+            if(sceneName.ToLowerInvariant() == "lakeregion" || sceneName.ToLowerInvariant() == "marshregion" || sceneName.ToLowerInvariant() == "lakeregion" || sceneName.ToLowerInvariant() == "tracksregion")
             {
                 new TransitionZoneManager().ModifyTunnels();
             }
