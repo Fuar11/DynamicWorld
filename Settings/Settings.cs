@@ -9,16 +9,47 @@ namespace DynamicWorld
             Disabled, Enabled
         }
 
+        [Section("Earthquakes")]
+
+        [Name("Minimum Time to Earthquake")]
+        [Description("The minimum time it takes for the next earthquake to occur in days.")]
+        [Slider(15, 60)]
+        public int eqMinTime = 15;
+
+        [Name("Maximum Time to Earthquake")]
+        [Description("The maximum time it takes for the next earthquake to occur in days.")]
+        [Slider(60, 90)]
+        public int eqMaxTime = 60;
+
         [Section("Transition Zones")]
 
-        [Name("Hard Lock")]
+        [Name("Dead End")]
+        [Description("With this enabled, certain regions with a single transition zone or a set of transition zones can get blocked, rendering the entire region inaccessible or trapping you there.")]
         [Choice("Disabled", "Enabled")]
         public Active hardLock = Active.Disabled;
 
         // this is called whenever there is a change. Ensure it contains the null bits that the base method has
         protected override void OnChange(FieldInfo field, object? oldValue, object? newValue)
         {
-            base.OnChange(field, oldValue, newValue);
+            if (field.Name == nameof(eqMinTime)) RefreshValues("fpMaxTime");
+            else if (field.Name == nameof(eqMaxTime)) RefreshValues("fpMinTime");
+
+            RefreshGUI();
+        }
+
+        internal void RefreshValues(string fieldName)
+        {
+
+            if (fieldName == "fpMinTime")
+            {
+                if (eqMaxTime < eqMinTime) eqMinTime = eqMaxTime - 1;
+                eqMinTime = Mathf.Clamp(eqMinTime, 15, 60);
+            }
+            else if (fieldName == "fpMaxTime")
+            {
+                if (eqMinTime > eqMaxTime) eqMaxTime = eqMinTime + 1;
+                eqMaxTime = Mathf.Clamp(eqMaxTime, 15, 60);
+            }
         }
 
         // This is used to load the settings

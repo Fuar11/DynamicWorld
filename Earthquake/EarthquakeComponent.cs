@@ -18,8 +18,8 @@ namespace DynamicWorld.Earthquake
     {
 
         //in days
-        float minTimeToEarthquake = 10f;
-        float maxTimeToEarthquake = 60f;
+        float minTimeToEarthquake = Settings.Instance.eqMinTime;
+        float maxTimeToEarthquake = Settings.Instance.eqMaxTime;
 
         float nextEarthquakeTime;
         float lastEarthquakeTime;
