@@ -275,11 +275,74 @@ namespace DynamicWorld.Environment
 
         }
 
-        public void ModifyCaveTransition(string scene)
+        public void ModifyCaveTransition()
         {
+            string scene = GameManager.m_ActiveScene;
+
+            if (scene == "DamCaveTransitionZone" && windingRiverCaveTransition != 0)
+            {
+                Vector3 position = new Vector3(-49.55f, 4.4f, 76.8f);
+                Vector3 rotation = new Vector3(-16.23f, 122.39f, -105.4f);
+
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock23", position, rotation);
+            }
+            else if (scene == "MountainTownCaveA" && mountainTownCaveTransition != 0)
+            {
+                Vector3 position = new Vector3(-98.63f, 24.73f, -81.06f);
+                Vector3 rotation = new Vector3(303.23f, 243.39f, 197.56f);
+
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock23", position, rotation);
+            }
+            else if (scene == "CanneryMarshTransitionCave" && bleakInletCaveTransition != 0)
+            {
+                Vector3 position = new Vector3(-26.9f, 38.08f, 0.263f);
+                Vector3 rotation = new Vector3(-238.10f, 9.11f, -279.29f);
+
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock11", position, rotation);
+            }
+            else if (scene == "BlackrockCaveA")
+            {
+
+                if(blackrockCaveTransition == 1)
+                {
+                    Vector3 position = new Vector3(96.52f, -12.08f, -23.38f);
+                    Vector3 rotation = new Vector3(-198.10f, -76.95f, 85.32f);
+
+                    SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock23", position, rotation);
+                }
+                else if(blackrockCaveTransition == 2)
+                {
+                    Vector3 position1 = new Vector3(35.83f, -24.20f, 22.38f);
+                    Vector3 rotation1 = new Vector3(-201.8f, 64.61f, -170.4f);
+                    Vector3 position2 = new Vector3(37.58f, -24.13f, 22.61f);
+                    Vector3 rotation2 = new Vector3(-199.8f, 64.97f, -169.19f);
+
+                    SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock11", position1, rotation1);
+                    SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock11", position2, rotation2);
+                }
+            }
+            else if (scene == "AshCaveA" && ashCanyonCaveTransition != 0)
+            {
+                Vector3 position1 = new Vector3(-31.5f, 1.75f, 23.87f);
+                Vector3 rotation1 = new Vector3(-58.10f, 51.94f, -269.8f);
+                Vector3 position2 = new Vector3(-32.5f, -0.59f, 25.03f);
+                Vector3 rotation2 = new Vector3(-148.10f, 75.36f, -72.54f);
+
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock23", position1, rotation1);
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock17", position2, rotation2);
+            }
+            else if (scene == "RiverValleyTransitionCave" && hushedRiverValleyCaveTransition != 0)
+            {
+                Vector3 position1 = new Vector3(-60f, -7.56f, 55.27f);
+                Vector3 rotation1 = new Vector3(232.9f, 13.02f, -103f);
+                Vector3 position2 = new Vector3(-59f, -6.8f, 53.83f);
+                Vector3 rotation2 = new Vector3(9.9f, 86.02f, -29.73f);
+
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock17", position1, rotation1);
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock3", position2, rotation2);
+            }
 
         }
-
 
     }
 }

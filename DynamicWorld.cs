@@ -54,6 +54,10 @@ namespace DynamicWorld
             {
                 new TransitionZoneManager().ModifyMineTransition();
             }
+            if (sceneName.ToLowerInvariant().Contains("cave"))
+            {
+                new TransitionZoneManager().ModifyCaveTransition();
+            }
         }
 
         public override void OnUpdate()

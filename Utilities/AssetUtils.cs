@@ -44,8 +44,22 @@ namespace DynamicWorld.Utilities
                     mc.sharedMesh = mf.sharedMesh;
                     break;
                 case "OBJ_ModMineRock23":
-                    Main.Logger.Log($"Creating prefab for {prefabName}", FlaggedLoggingLevel.Debug);
                     mf.sharedMesh = Addressables.LoadAssetAsync<Mesh>("Assets/ArtAssets/Env/Objects/OBJ_MineRocks/OBJ_MineRock23.fbx").WaitForCompletion();
+                    mr.sharedMaterial = Addressables.LoadAssetAsync<Material>("Assets/ArtAssets/Materials/Unique/OBJ_MineRocksA_Mat.mat").WaitForCompletion();
+                    mc.sharedMesh = mf.sharedMesh;
+                    break;
+                case "OBJ_ModMineRock11":
+                    mf.sharedMesh = Addressables.LoadAssetAsync<Mesh>("Assets/ArtAssets/Env/Objects/OBJ_MineRocks/OBJ_MineRock11.fbx").WaitForCompletion();
+                    mr.sharedMaterial = Addressables.LoadAssetAsync<Material>("Assets/ArtAssets/Materials/Unique/OBJ_MineRocksA_Mat.mat").WaitForCompletion();
+                    mc.sharedMesh = mf.sharedMesh;
+                    break;
+                case "OBJ_ModMineRock17":
+                    mf.sharedMesh = Addressables.LoadAssetAsync<Mesh>("Assets/ArtAssets/Env/Objects/OBJ_MineRocks/OBJ_MineRock17.fbx").WaitForCompletion();
+                    mr.sharedMaterial = Addressables.LoadAssetAsync<Material>("Assets/ArtAssets/Materials/Unique/OBJ_MineRocksA_Mat.mat").WaitForCompletion();
+                    mc.sharedMesh = mf.sharedMesh;
+                    break;
+                case "OBJ_ModMineRock3":
+                    mf.sharedMesh = Addressables.LoadAssetAsync<Mesh>("Assets/ArtAssets/Env/Objects/OBJ_MineRocks/OBJ_MineRock3.fbx").WaitForCompletion();
                     mr.sharedMaterial = Addressables.LoadAssetAsync<Material>("Assets/ArtAssets/Materials/Unique/OBJ_MineRocksA_Mat.mat").WaitForCompletion();
                     mc.sharedMesh = mf.sharedMesh;
                     break;
