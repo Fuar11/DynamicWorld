@@ -2,6 +2,8 @@
 using DynamicWorld.Utilities.JSON;
 using UnityEngine.AddressableAssets;
 using DynamicWorld.Utilities;
+using Il2CppSystem;
+using Random = System.Random;
 
 namespace DynamicWorld.Environment
 {
@@ -101,45 +103,47 @@ namespace DynamicWorld.Environment
         public void RollTransitionZones()
         {
 
+            Random rand = new Random();
+
             //check if they're zero first
             ashCanyonCaveTransition = ashCanyonCaveTransition == 0 && Utils.RollChance(40) ? 1 : ashCanyonCaveTransition;
             bleakInletCaveTransition = bleakInletCaveTransition == 0 && Utils.RollChance(40) ? 1 : bleakInletCaveTransition;
-            blackrockCaveTransition = blackrockCaveTransition == 0 && Utils.RollChance(40) ? 1 : blackrockCaveTransition;
+            blackrockCaveTransition = blackrockCaveTransition == 0 && Utils.RollChance(70) ? 1 : blackrockCaveTransition;
 
             if (noMercy)
             {
                 //values subject to change 
-                ravineTransition = ravineTransition == 0 && Utils.RollChance(40) ? 1 : ravineTransition;
-                cinderHillsTransition = cinderHillsTransition == 0 && Utils.RollChance(40) ? 1 : cinderHillsTransition;
+                ravineTransition = ravineTransition == 0 && Utils.RollChance(70) ? 1 : ravineTransition;
+                cinderHillsTransition = cinderHillsTransition == 0 && Utils.RollChance(70) ? 1 : cinderHillsTransition;
                 windingRiverCaveTransition = windingRiverCaveTransition == 0 && Utils.RollChance(40) ? 1 : windingRiverCaveTransition;
-                forlornMuskegTunnelTransition = forlornMuskegTunnelTransition == 0 && Utils.RollChance(40) ? 1 : forlornMuskegTunnelTransition;
+                forlornMuskegTunnelTransition = forlornMuskegTunnelTransition == 0 && Utils.RollChance(50) ? 1 : forlornMuskegTunnelTransition;
                 mountainTownCaveTransition = mountainTownCaveTransition == 0 && Utils.RollChance(40) ? 1 : mountainTownCaveTransition;
                 hushedRiverValleyCaveTransition = hushedRiverValleyCaveTransition == 0 && Utils.RollChance(40) ? 1 : hushedRiverValleyCaveTransition;
-                crumblingHighwayTransition = crumblingHighwayTransition == 0 && Utils.RollChance(30) ? 1 : crumblingHighwayTransition;
-                brokenRailroadTunnelTransition = brokenRailroadTunnelTransition == 0 && Utils.RollChance(25) ? 1 : brokenRailroadTunnelTransition;
+                crumblingHighwayTransition = crumblingHighwayTransition == 0 && Utils.RollChance(90) ? rand.Next(1, 2) : crumblingHighwayTransition;
+                brokenRailroadTunnelTransition = brokenRailroadTunnelTransition == 0 && Utils.RollChance(70) ? 1 : brokenRailroadTunnelTransition;
             }
             else
             {
                 if (mountainTownCaveTransition == 0)
                 {
-                    forlornMuskegTunnelTransition = forlornMuskegTunnelTransition == 0 && Utils.RollChance(40) ? 1 : forlornMuskegTunnelTransition;
+                    forlornMuskegTunnelTransition = forlornMuskegTunnelTransition == 0 && Utils.RollChance(50) ? 1 : forlornMuskegTunnelTransition;
                 }
                 if (forlornMuskegTunnelTransition == 0)
                 {
-                    mountainTownCaveTransition = mountainTownCaveTransition == 0 && Utils.RollChance(40) ? 1 : mountainTownCaveTransition;
+                    mountainTownCaveTransition = mountainTownCaveTransition == 0 && Utils.RollChance(30) ? 1 : mountainTownCaveTransition;
                 }
 
                 if (ravineTransition == 0 && cinderHillsTransition == 0)
                 {
-                    windingRiverCaveTransition = windingRiverCaveTransition == 0 && Utils.RollChance(40) ? 1 : windingRiverCaveTransition;
+                    windingRiverCaveTransition = windingRiverCaveTransition == 0 && Utils.RollChance(30) ? 1 : windingRiverCaveTransition;
                 }
                 if (windingRiverCaveTransition == 0 && cinderHillsTransition == 0)
                 {
-                    ravineTransition = ravineTransition == 0 && Utils.RollChance(40) ? 1 : ravineTransition;
+                    ravineTransition = ravineTransition == 0 && Utils.RollChance(80) ? 1 : ravineTransition;
                 }
                 if (ravineTransition == 0 && windingRiverCaveTransition == 0)
                 {
-                    cinderHillsTransition = cinderHillsTransition == 0 && Utils.RollChance(40) ? 1 : cinderHillsTransition;
+                    cinderHillsTransition = cinderHillsTransition == 0 && Utils.RollChance(70) ? 1 : cinderHillsTransition;
                 }
             }
 
@@ -236,8 +240,38 @@ namespace DynamicWorld.Environment
 
         }
 
-        public void ModifyMineTransition(string scene)
+        public void ModifyMineTransition()
         {
+            string scene = GameManager.m_ActiveScene;
+
+            if (scene == "HighwayMineTransitionZone")
+            {
+
+                if (crumblingHighwayTransition == 1)
+                {
+                    //disable wood beam
+                    GameObject.Find("Art/Geo").transform.GetChild(69).gameObject.active = false;
+
+                    Vector3 position = new Vector3(-93.72f, 0.0126f, -5.175f);
+                    Vector3 rotation = new Vector3(-27.54f, 81.652f, -77.40f);
+
+                    SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock24", position, rotation);
+                }
+                else if(crumblingHighwayTransition == 2)
+                {
+                    Vector3 position = new Vector3(-51.01f, -3.5f, 7.028f);
+                    Vector3 rotation = new Vector3(-173.54f, 30.362f, -137.9f);
+
+                    SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock24", position, rotation);
+                }
+            }
+            else if(scene == "MineTransitionZone" && cinderHillsTransition != 0)
+            {
+                Vector3 position = new Vector3(-27.77f, -12.35f, 66.1f);
+                Vector3 rotation = new Vector3(-153.3f, -71.6f, 60.076f);
+
+                SceneUtils.InstantiateObjectInScene("OBJ_ModMineRock23", position, rotation);
+            }
 
         }
 

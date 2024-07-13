@@ -74,5 +74,23 @@ namespace DynamicWorld.Utilities
             }
         }
 
+        public static void InstantiateObjectInScene(string name, Vector3 pos, Vector3 rot)
+        {
+
+            GameObject prfb = AssetUtils.GetPrefab(name);
+
+            if(prfb == null)
+            {
+                Main.Logger.Log($"Prefab is null", FlaggedLoggingLevel.Debug);
+                return;
+            }
+
+            Main.Logger.Log("Instantiating object in scene", FlaggedLoggingLevel.Debug);
+
+            GameObject go = GameObject.Instantiate<GameObject>(prfb);
+            go.transform.position = pos;
+            go.transform.rotation = Quaternion.Euler(rot);
+            go.name = "FUAR_" + go.name;
+        }
     }
 }
