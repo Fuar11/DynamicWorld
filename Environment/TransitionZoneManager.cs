@@ -32,7 +32,7 @@ namespace DynamicWorld.Environment
         private void LoadOrInitData()
         {
 
-            TransitionZoneDataSaveDataProxy? ldp = JsonFile.Load<TransitionZoneDataSaveDataProxy>($"{MelonEnvironment.ModsDirectory}/DynamicWorld.json", true);
+            TransitionZoneDataSaveDataProxy? ldp = Main.SaveDataManager.LoadTz();
 
             //if data from load is null
             if (ldp == null)
@@ -80,7 +80,7 @@ namespace DynamicWorld.Environment
 
             Main.Logger.Log($"Saving data!", ComplexLogger.FlaggedLoggingLevel.Debug);
             TransitionZoneDataSaveDataProxy sdp = new TransitionZoneDataSaveDataProxy(ravineTransition, cinderHillsTransition, windingRiverCaveTransition, crumblingHighwayTransition, forlornMuskegTunnelTransition, brokenRailroadTunnelTransition, mountainTownCaveTransition, bleakInletCaveTransition, ashCanyonCaveTransition, blackrockCaveTransition, hushedRiverValleyCaveTransition);
-            JsonFile.Save<TransitionZoneDataSaveDataProxy>($"{MelonEnvironment.ModsDirectory}/DynamicWorld.json", sdp);
+            Main.SaveDataManager.Save(sdp);
         }
 
         public void ResetSaveData()

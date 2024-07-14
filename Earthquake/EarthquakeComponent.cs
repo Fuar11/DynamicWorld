@@ -10,12 +10,16 @@ using AudioMgr;
 using static System.Random;
 using Random = System.Random;
 using DynamicWorld.Environment;
+using MelonLoader.Utils;
+using DynamicWorld.Utilities.JSON;
 
 namespace DynamicWorld.Earthquake
 {
     [RegisterTypeInIl2Cpp]
     internal class EarthquakeComponent : MonoBehaviour
     {
+        //SDP
+        public EarthquakeSaveDataProxy? SaveDataProxy;
 
         //in days
         float minTimeToEarthquake = Settings.Instance.eqMinTime;
@@ -37,18 +41,35 @@ namespace DynamicWorld.Earthquake
             VolumeMaster.onVolumeChange -= player.ResetVolume;
         }
 
+        public void Start()
+        {
+            LoadOrInitData();
+        }
+
         private void LoadOrInitData()
         {
+            SaveDataProxy ??= Main.SaveDataManager?.Load();
 
+            if(SaveDataProxy == null)
+            {
+                Main.Logger.Log("Save Data is null", ComplexLogger.FlaggedLoggingLevel.Debug);
 
+                SaveDataProxy = new();
+                ScheduleEarthquake();
+            }
+            else
+            {
+                nextEarthquakeTime = SaveDataProxy.nextEarthquakeTime;
+                lastEarthquakeTime = SaveDataProxy.lastEarthquakeTime;
 
+                Main.Logger.Log($"Loaded next earthquake time: {nextEarthquakeTime}", ComplexLogger.FlaggedLoggingLevel.Debug);
+                Main.Logger.Log($"Loaded last earthquake time: {lastEarthquakeTime}", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            }
         }
 
         public void Update()
         {
-
-            if (nextEarthquakeTime == null) return;
-
             float currentTime = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused() / 24f;
 
             if (currentTime == nextEarthquakeTime && nextEarthquakeTime != 0)
@@ -75,12 +96,9 @@ namespace DynamicWorld.Earthquake
             }
         }
 
-        public void DoEarthquake(float x = 0.9f, float y = 0.1f, float weaponSway = 0.1f, float rotation = 0.4f)
+        public void DoEarthquake(float x = 0.95f, float y = 0.1f, float weaponSway = 0.1f, float rotation = 0.4f)
         {
-            Main.Logger.Log("Doing major earthquake!", ComplexLogger.FlaggedLoggingLevel.Trace);
-            TransitionZoneManager tzm = new TransitionZoneManager();
-            tzm.RollTransitionZones();
-
+     
             float duration = FloatUtilities.GetRandomFloat(minEarthquakeDuration, maxEarthquakeDuration);
 
             vp_FPSCamera cam = GameManager.GetVpFPSCamera();
@@ -90,14 +108,15 @@ namespace DynamicWorld.Earthquake
             //audio
             EarthquakeAudioHelper.PlayAudio(true, duration, player, clips);
 
+            TransitionZoneManager tzm = new TransitionZoneManager();
+            tzm.RollTransitionZones();
+
             ScheduleEarthquake();
         }
 
         //minor tremor
-        public void DoTremor(float x = 0.5f, float y = 0.1f, float weaponSway = 0.1f, float rotation = 0.3f)
+        public void DoTremor(float x = 0.4f, float y = 0.1f, float weaponSway = 0.1f, float rotation = 0.3f)
         {
-            Main.Logger.Log("Doing minor tremor.", ComplexLogger.FlaggedLoggingLevel.Trace);
-
             float duration = FloatUtilities.GetRandomFloat(1.5f, 5f);
 
             vp_FPSCamera cam = GameManager.GetVpFPSCamera();
@@ -111,9 +130,12 @@ namespace DynamicWorld.Earthquake
         {
             nextEarthquakeTime = FloatUtilities.GetRandomFloat(minTimeToEarthquake, maxTimeToEarthquake);
             float currentTimeInDays = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused() / 24f;
-            Main.Logger.Log($"Current time in days: {currentTimeInDays}", ComplexLogger.FlaggedLoggingLevel.Debug);
             nextEarthquakeTime = currentTimeInDays + nextEarthquakeTime;
-            Main.Logger.Log($"Next earthquake time: {nextEarthquakeTime}", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            SaveDataProxy.nextEarthquakeTime = nextEarthquakeTime;
+            SaveDataProxy.lastEarthquakeTime = lastEarthquakeTime;
+
+            Main.SaveDataManager.Save(SaveDataProxy);
         }
 
     }

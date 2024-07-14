@@ -9,17 +9,17 @@ namespace DynamicWorld.Environment
     internal class TransitionZoneDataSaveDataProxy
     {
 
-        public int ravineTransition;
-        public int cinderHillsTransition;
-        public int windingRiverCaveTransition;
-        public int crumblingHighwayTransition;
-        public int forlornMuskegTunnelTransition;
-        public int brokenRailroadTunnelTransition;
-        public int mountainTownCaveTransition;
-        public int bleakInletCaveTransition;
-        public int ashCanyonCaveTransition;
-        public int blackrockCaveTransition;
-        public int hushedRiverValleyCaveTransition;
+        public int ravineTransition { get; set; }
+        public int cinderHillsTransition { get; set; }
+        public int windingRiverCaveTransition { get; set; }
+        public int crumblingHighwayTransition { get; set; }
+        public int forlornMuskegTunnelTransition { get; set; }
+        public int brokenRailroadTunnelTransition { get; set; }
+        public int mountainTownCaveTransition { get; set; }
+        public int bleakInletCaveTransition { get; set; }
+        public int ashCanyonCaveTransition { get; set; }
+        public int blackrockCaveTransition { get; set; }
+        public int hushedRiverValleyCaveTransition { get; set; }
 
         public TransitionZoneDataSaveDataProxy(int ravineTransition, int cinderHillsTransition, int windingRiverCaveTransition, int crumblingHighwayTransition, int forlornMuskegTunnelTransition, int brokenRailroadTunnelTransition, int mountainTownCaveTransition, int bleakInletCaveTransition, int ashCanyonCaveTransition, int blackrockCaveTransition, int hushedRiverValleyCaveTransition)
         {

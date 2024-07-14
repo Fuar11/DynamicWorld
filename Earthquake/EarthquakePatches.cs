@@ -13,7 +13,7 @@ namespace DynamicWorld.Earthquake
     {
 
         [HarmonyPatch(typeof(vp_FPSCamera), nameof(vp_FPSCamera.UpdateEarthQuake))]
-        public class test2
+        public class EarthquakeCameraChanges
         {
 
             //static Stopwatch timer = new Stopwatch();

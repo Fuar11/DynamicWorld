@@ -1,8 +1,13 @@
-﻿using System;
+﻿using DynamicWorld.Earthquake;
+using DynamicWorld.Environment;
+using DynamicWorld.Utilities.JSON;
+using MelonLoader.Utils;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DynamicWorld.Utilities
@@ -10,14 +15,64 @@ namespace DynamicWorld.Utilities
     internal class SaveDataManager
     {
 
-        ModDataManager dm = new ModDataManager("Dynamic World", false);
+        ModDataManager dm = new ModDataManager("Dynamic World", true);
 
-        public void Save(string data, string suffix)
+        /**
+        public async Task Save(EarthquakeSaveDataProxy data)
         {
-            dm.Save(data, suffix);
+            await JsonFile.SaveAsync<EarthquakeSaveDataProxy>($"{MelonEnvironment.ModsDirectory}/DynamicWorld.json", data);
         }
 
-      
+        public async Task<EarthquakeSaveDataProxy?> Load()
+        {
+            return await JsonFile.LoadAsync<EarthquakeSaveDataProxy>($"{MelonEnvironment.ModsDirectory}/DynamicWorld.json", true);
+        } **/
 
+        public void Save(EarthquakeSaveDataProxy data)
+        {
+
+            Main.Logger.Log("Saving Earthquake Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            string? dataString;
+            dataString = JsonSerializer.Serialize<EarthquakeSaveDataProxy>(data);
+            dm.Save(dataString, "EarthquakeData");
+        }
+
+        public void Save(TransitionZoneDataSaveDataProxy data)
+        {
+
+            Main.Logger.Log("Saving Transition Zone Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            string? dataString;
+            dataString = JsonSerializer.Serialize<TransitionZoneDataSaveDataProxy>(data);
+            dm.Save(dataString, "TransitionZoneData");
+        }
+
+        public EarthquakeSaveDataProxy Load()
+        {
+            Main.Logger.Log("Loading Earthquake Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            string? dataString = dm.Load("EarthquakeData");
+            if (dataString is null) 
+            {
+                Main.Logger.Log("Loaded Earthquake Data is null...", ComplexLogger.FlaggedLoggingLevel.Debug);
+                return null;
+            }
+
+            EarthquakeSaveDataProxy? data = JsonSerializer.Deserialize<EarthquakeSaveDataProxy>(dataString);
+            return data;
+        }
+
+        public TransitionZoneDataSaveDataProxy LoadTz()
+        {
+
+            Main.Logger.Log("Loading Transition Zone Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
+
+            string? dataString = dm.Load("TransitionZoneData");
+            if (dataString is null) return null;
+
+            TransitionZoneDataSaveDataProxy? data = JsonSerializer.Deserialize<TransitionZoneDataSaveDataProxy>(dataString);
+            return data;
+        }
     }
 }
