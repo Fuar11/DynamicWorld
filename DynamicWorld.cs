@@ -12,7 +12,7 @@ namespace DynamicWorld
     public class Main : MelonMod
     {
         internal static ComplexLogger<Main> Logger = new();
-        EarthquakeComponent EarthquakeComponent;
+        internal static EarthquakeComponent EarthquakeComponent;
         internal static SaveDataManager SaveDataManager;
 
         //Earthquake Audio
@@ -39,7 +39,6 @@ namespace DynamicWorld
             if (sceneName.ToLowerInvariant().Contains("boot") || sceneName.ToLowerInvariant().Contains("empty")) return;
             if (sceneName.ToLowerInvariant().Contains("menu"))
             {
-                Logger.Log("Removing EarthquakeManager since we are in menu scene", FlaggedLoggingLevel.Debug);
                 GameObject.Destroy(GameObject.Find("EarthquakeManager"));
                 EarthquakeComponent = null;
                 return;
@@ -91,14 +90,6 @@ namespace DynamicWorld
             {
                 EarthquakeComponent.DoEarthquake();
             }
-
-            if (InputManager.GetKeyDown(InputManager.m_CurrentContext, KeyCode.KeypadEnter))
-            {
-                TransitionZoneManager tmz = new TransitionZoneManager();
-                tmz.ResetSaveData();
-            }
-
-
         }
 
     }

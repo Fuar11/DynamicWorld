@@ -12,11 +12,25 @@ namespace DynamicWorld.Earthquake
     internal class EarthquakePatches
     {
 
+        [HarmonyPatch(typeof(SaveGameSlots), nameof(SaveGameSlots.CreateSlot))]
+
+        public class SaveAfterNewGame
+        {
+
+            public static void Postfix()
+            {
+                if (Main.EarthquakeComponent != null)
+                {
+                    Main.Logger.Log("Scheduling first Earthquake!", ComplexLogger.FlaggedLoggingLevel.Debug);
+                    Main.EarthquakeComponent.ScheduleEarthquake();
+                }
+            }
+        }
+
         [HarmonyPatch(typeof(vp_FPSCamera), nameof(vp_FPSCamera.UpdateEarthQuake))]
         public class EarthquakeCameraChanges
         {
 
-            //static Stopwatch timer = new Stopwatch();
             static private float lastUpdateTime = 0f;
 
             public static bool Prefix(vp_FPSCamera __instance)
@@ -26,12 +40,7 @@ namespace DynamicWorld.Earthquake
                 {
                     lastUpdateTime = lastUpdateTime == 0f ? Time.time : lastUpdateTime;
 
-                    /**
-                    if (!timer.IsRunning)
-                    {
-                        Main.Logger.Log("Starting timer", ComplexLogger.FlaggedLoggingLevel.Debug);
-                        timer.Start();
-                    }**/
+                
                 }
 
                 return false;
@@ -41,14 +50,6 @@ namespace DynamicWorld.Earthquake
 
                 float currentTime = Time.time;
                 float elapsedTime = currentTime - lastUpdateTime;
-
-                /**
-                if (__instance.m_EarthQuakeTime <= 0 && timer.Elapsed.TotalSeconds > 0)
-                {
-                    timer.Stop();
-                    Main.Logger.Log($"Time since earthquake: {timer.Elapsed.TotalSeconds}", ComplexLogger.FlaggedLoggingLevel.Debug);
-                    timer.Reset();
-                }**/
 
                 if (__instance.m_EarthQuakeTime <= 0f)
                 {

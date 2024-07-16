@@ -52,19 +52,13 @@ namespace DynamicWorld.Earthquake
 
             if(SaveDataProxy == null)
             {
-                Main.Logger.Log("Save Data is null", ComplexLogger.FlaggedLoggingLevel.Debug);
-
+                Main.Logger.Log("Save Data is null... Creating SDP", ComplexLogger.FlaggedLoggingLevel.Debug);
                 SaveDataProxy = new();
-                ScheduleEarthquake();
             }
             else
             {
                 nextEarthquakeTime = SaveDataProxy.nextEarthquakeTime;
                 lastEarthquakeTime = SaveDataProxy.lastEarthquakeTime;
-
-                Main.Logger.Log($"Loaded next earthquake time: {nextEarthquakeTime}", ComplexLogger.FlaggedLoggingLevel.Debug);
-                Main.Logger.Log($"Loaded last earthquake time: {lastEarthquakeTime}", ComplexLogger.FlaggedLoggingLevel.Debug);
-
             }
         }
 
@@ -126,7 +120,7 @@ namespace DynamicWorld.Earthquake
             EarthquakeAudioHelper.PlayAudio(false, duration, player, clips);
         }
 
-        private void ScheduleEarthquake()
+        public void ScheduleEarthquake()
         {
             nextEarthquakeTime = FloatUtilities.GetRandomFloat(minTimeToEarthquake, maxTimeToEarthquake);
             float currentTimeInDays = GameManager.GetTimeOfDayComponent().GetHoursPlayedNotPaused() / 24f;
