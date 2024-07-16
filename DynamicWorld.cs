@@ -46,10 +46,13 @@ namespace DynamicWorld
            
             if (!sceneName.Contains("_SANDBOX") && !sceneName.Contains("_DLC") && !sceneName.Contains("_WILDLIFE"))
             {
-                GameObject EarthquakeManager = new() { name = "EarthquakeManager", layer = vp_Layer.Default };
-                UnityEngine.Object.Instantiate(EarthquakeManager, GameManager.GetVpFPSPlayer().transform);
-                GameObject.DontDestroyOnLoad(EarthquakeManager);
-                EarthquakeComponent ??= EarthquakeManager.AddComponent<EarthquakeComponent>();
+                if(EarthquakeComponent == null)
+                {
+                    GameObject EarthquakeManager = new() { name = "EarthquakeManager", layer = vp_Layer.Default };
+                    UnityEngine.Object.Instantiate(EarthquakeManager, GameManager.GetVpFPSPlayer().transform);
+                    GameObject.DontDestroyOnLoad(EarthquakeManager);
+                    EarthquakeComponent = EarthquakeManager.AddComponent<EarthquakeComponent>();
+                }
             }
         }
 

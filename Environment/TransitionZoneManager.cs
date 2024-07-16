@@ -67,18 +67,6 @@ namespace DynamicWorld.Environment
 
         private void SaveData()
         {
-
-            Main.Logger.Log($"Saving Ravine: {ravineTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Cinder Hills: {cinderHillsTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Forlorn Muskeg Tunnel: {forlornMuskegTunnelTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Winding River Cave: {windingRiverCaveTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Crumbling Highway Mine: {crumblingHighwayTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Mountain Town Cave: {mountainTownCaveTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Broken Railroad Tunnel: {brokenRailroadTunnelTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Blackrock Cave: {blackrockCaveTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-            Main.Logger.Log($"Saving Ash Canyon Cave: {ashCanyonCaveTransition}", ComplexLogger.FlaggedLoggingLevel.Debug);
-
-            Main.Logger.Log($"Saving data!", ComplexLogger.FlaggedLoggingLevel.Debug);
             TransitionZoneDataSaveDataProxy sdp = new TransitionZoneDataSaveDataProxy(ravineTransition, cinderHillsTransition, windingRiverCaveTransition, crumblingHighwayTransition, forlornMuskegTunnelTransition, brokenRailroadTunnelTransition, mountainTownCaveTransition, bleakInletCaveTransition, ashCanyonCaveTransition, blackrockCaveTransition, hushedRiverValleyCaveTransition);
             Main.SaveDataManager.Save(sdp);
         }
@@ -147,8 +135,6 @@ namespace DynamicWorld.Environment
                 }
             }
 
-
-
             SaveData();
         }
 
@@ -167,14 +153,10 @@ namespace DynamicWorld.Environment
 
         public void ModifyTunnels()
         {
-            Main.Logger.Log("Modifying the tunnels", ComplexLogger.FlaggedLoggingLevel.Debug);
-
             string scene = GameManager.m_ActiveScene;
 
             if (scene == "LakeRegion" && forlornMuskegTunnelTransition != 0)
             {
-
-                Main.Logger.Log("Modifying tunnel to FM", ComplexLogger.FlaggedLoggingLevel.Debug);
 
                 //GameObject tunnelRock1 = Addressables.LoadAssetAsync<GameObject>("TRN_RockGroupMidB_Main").WaitForCompletion();
                 GameObject tunnelRock1 = GameObject.Find("TRN_RockGroupMidB_Top_Prefab");

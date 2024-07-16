@@ -30,9 +30,6 @@ namespace DynamicWorld.Utilities
 
         public void Save(EarthquakeSaveDataProxy data)
         {
-
-            Main.Logger.Log("Saving Earthquake Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
-
             string? dataString;
             dataString = JsonSerializer.Serialize<EarthquakeSaveDataProxy>(data);
             dm.Save(dataString, "EarthquakeData");
@@ -40,9 +37,6 @@ namespace DynamicWorld.Utilities
 
         public void Save(TransitionZoneDataSaveDataProxy data)
         {
-
-            Main.Logger.Log("Saving Transition Zone Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
-
             string? dataString;
             dataString = JsonSerializer.Serialize<TransitionZoneDataSaveDataProxy>(data);
             dm.Save(dataString, "TransitionZoneData");
@@ -50,8 +44,6 @@ namespace DynamicWorld.Utilities
 
         public EarthquakeSaveDataProxy Load()
         {
-            Main.Logger.Log("Loading Earthquake Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
-
             string? dataString = dm.Load("EarthquakeData");
             if (dataString is null) 
             {
@@ -65,8 +57,6 @@ namespace DynamicWorld.Utilities
 
         public TransitionZoneDataSaveDataProxy LoadTz()
         {
-
-            Main.Logger.Log("Loading Transition Zone Data!", ComplexLogger.FlaggedLoggingLevel.Debug);
 
             string? dataString = dm.Load("TransitionZoneData");
             if (dataString is null) return null;

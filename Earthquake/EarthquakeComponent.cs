@@ -52,8 +52,8 @@ namespace DynamicWorld.Earthquake
 
             if(SaveDataProxy == null)
             {
-                Main.Logger.Log("Save Data is null... Creating SDP", ComplexLogger.FlaggedLoggingLevel.Debug);
                 SaveDataProxy = new();
+                ScheduleEarthquake();
             }
             else
             {

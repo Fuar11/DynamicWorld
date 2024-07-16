@@ -28,6 +28,11 @@ namespace DynamicWorld
         [Choice("Disabled", "Enabled")]
         public Active hardLock = Active.Disabled;
 
+        [Name("Roll Transition Zones on Start")]
+        [Description("Transition Zones will be rolled when starting a new game.")]
+        [Choice("Disabled", "Enabled")]
+        public Active transitionZoneRollStart = Active.Disabled;
+
         // this is called whenever there is a change. Ensure it contains the null bits that the base method has
         protected override void OnChange(FieldInfo field, object? oldValue, object? newValue)
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MelonLoader;
 using Il2Cpp;
 using Random = UnityEngine.Random;
+using DynamicWorld.Environment;
 
 namespace DynamicWorld.Earthquake
 {
@@ -21,8 +22,8 @@ namespace DynamicWorld.Earthquake
             {
                 if (Main.EarthquakeComponent != null)
                 {
-                    Main.Logger.Log("Scheduling first Earthquake!", ComplexLogger.FlaggedLoggingLevel.Debug);
                     Main.EarthquakeComponent.ScheduleEarthquake();
+                    if(Settings.Instance.transitionZoneRollStart == Settings.Active.Enabled) new TransitionZoneManager().RollTransitionZones();
                 }
             }
         }
