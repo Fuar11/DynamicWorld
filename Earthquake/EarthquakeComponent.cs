@@ -11,7 +11,6 @@ using static System.Random;
 using Random = System.Random;
 using DynamicWorld.Environment;
 using MelonLoader.Utils;
-using DynamicWorld.Utilities.JSON;
 
 namespace DynamicWorld.Earthquake
 {

@@ -35,7 +35,7 @@ namespace DynamicWorld.Utilities
             _assignedShot.AssignClip(_assignedClip);
             _assignedShot._audioSource.PlayScheduled(_startTime);
 
-            Main.Logger.Log($"Playing audio on object: {_assignedShot.gameObject.name}", ComplexLogger.FlaggedLoggingLevel.Debug);
+            //Main.Logger.Log($"Playing audio on object: {_assignedShot.gameObject.name}", ComplexLogger.FlaggedLoggingLevel.Debug);
 
             _duration = duration;
             _startVolume = _assignedShot._audioSource.volume;

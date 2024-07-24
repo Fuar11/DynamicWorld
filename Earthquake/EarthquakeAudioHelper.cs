@@ -35,7 +35,6 @@ namespace DynamicWorld.Earthquake
                     Shot shot = kpv.Key.gameObject.GetComponent<Shot>();
                     if (shot == null)
                     {
-                        Main.Logger.Log($"Shot for object {kpv.Key.name} is null, creating.", ComplexLogger.FlaggedLoggingLevel.Debug);
                         shot = AudioMaster.CreateShot(kpv.Key, AudioMaster.SourceType.SFX);
                     }
                     shot.ApplySettings(kpv.Value.Item2);
@@ -52,6 +51,39 @@ namespace DynamicWorld.Earthquake
             Dictionary<GameObject, Tuple<string, Setting>> pairs = new Dictionary<GameObject, Tuple<string, Setting>>();
 
             string scene = GameManager.m_ActiveScene;
+
+            if(scene == "LakeRegion" || scene == "RuralRegion" || scene == "MountainTownRegion")
+            {
+
+                Setting settings = SettingMaster.NewSetting(AudioMaster.SourceType.SFX, 1f, 1f, 1f, 200f, 30f, 1f, 1f, 0f, false, AudioRolloffMode.Linear, null, 1);
+
+                GameObject radioTower = scene == "LakeRegion" ? GameObject.Find("STR_RadioTowerA_Prefab (1)") : GameObject.Find("STR_RadioTowerA_Prefab");
+                               
+                pairs.Add(radioTower, Tuple.Create("metal1", settings));
+
+            }
+            if (scene == "MarshRegion")
+            {
+                Setting settings = SettingMaster.NewSetting(AudioMaster.SourceType.SFX, 1f, 1f, 1f, 200f, 30f, 1f, 1f, 0f, false, AudioRolloffMode.Linear, null, 1);
+
+                GameObject radioTowerN = GameObject.Find("RadioTowerN");
+                GameObject radioTowerSW = GameObject.Find("RadioTowerSW");
+                GameObject radioTowerSE = GameObject.Find("RadioTowerSE");
+
+                pairs.Add(radioTowerN, Tuple.Create("metal1", settings));
+                pairs.Add(radioTowerSW, Tuple.Create("metal1", settings));
+                pairs.Add(radioTowerSE, Tuple.Create("metal1", settings));
+            }
+            if (scene == "CanneryRegion")
+            {
+                GameObject sourceObj = GameObject.Find("STR_RadioTowerA_Aurora_Prefab");
+
+                Setting settings = SettingMaster.NewSetting(AudioMaster.SourceType.SFX, 1f, 1f, 1f, 200f, 30f, 1f, 1f, 0f, false, AudioRolloffMode.Linear, null, 1);
+
+                pairs.Add(sourceObj, Tuple.Create("metal1", settings));
+            }
+
+
 
             if (scene.Contains("Dam"))
             {

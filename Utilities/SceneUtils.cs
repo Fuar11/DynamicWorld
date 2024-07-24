@@ -61,7 +61,6 @@ namespace DynamicWorld.Utilities
                 Main.Logger.Log("GameObject is null", FlaggedLoggingLevel.Debug);
                 return;
             }
-            Main.Logger.Log("Instantiating object in scene", FlaggedLoggingLevel.Debug);
 
             GameObject go = GameObject.Instantiate<GameObject>(prfb);
             go.transform.position = pos;
@@ -84,8 +83,6 @@ namespace DynamicWorld.Utilities
                 Main.Logger.Log($"Prefab is null", FlaggedLoggingLevel.Debug);
                 return;
             }
-
-            Main.Logger.Log("Instantiating object in scene", FlaggedLoggingLevel.Debug);
 
             GameObject go = GameObject.Instantiate<GameObject>(prfb);
             go.transform.position = pos;
