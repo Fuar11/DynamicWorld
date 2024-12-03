@@ -22,7 +22,7 @@ namespace DynamicWorld.Earthquake
         {
            
             playerShot._audioSource.volume = 1f;
-            new PlayAndFade(playerShot, cm.GetClip(GetBaseAudioForScene(duration)), duration, duration * 0.25f);
+            new Utilities.PlayAndFade(playerShot, cm.GetClip(GetBaseAudioForScene(duration)), duration, duration * 0.25f);
 
             if (eq)
             {
@@ -40,7 +40,7 @@ namespace DynamicWorld.Earthquake
                     shot.ApplySettings(kpv.Value.Item2);
 
                     shot._audioSource.volume = 1f;
-                    new PlayAndFade(shot, cm.GetClip(kpv.Value.Item1), duration, duration * 0.1f);
+                    new Utilities.PlayAndFade(shot, cm.GetClip(kpv.Value.Item1), duration, duration * 0.1f);
                 }
             }
         }
